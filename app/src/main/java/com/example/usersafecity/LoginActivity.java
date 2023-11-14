@@ -37,6 +37,8 @@ public class LoginActivity extends AppCompatActivity  {
     private TextView textViewin,forgotpass;
     private Button buttonin;
 
+  String redirect="false";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +50,8 @@ public class LoginActivity extends AppCompatActivity  {
         mAuth = FirebaseAuth.getInstance();
 
         this.setTitle("Login");
+
+        redirect=getIntent().getStringExtra("finish");
 
        // getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.acbar)));
         emailin=(EditText) findViewById(R.id.edttxtEmail);
@@ -72,7 +76,17 @@ public class LoginActivity extends AppCompatActivity  {
         buttonin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                userlogin();
+
+
+                InternetConnectionChecker connectionChecker = new InternetConnectionChecker(LoginActivity.this); // Replace 'this' with your activity or context
+                if (connectionChecker.isInternetConnected()) {
+                    userlogin();
+
+                } else {
+                    Toast.makeText(getApplicationContext(), "No Internet Connection", Toast.LENGTH_SHORT).show();
+                }
+
+
 
             }
         });
@@ -84,6 +98,12 @@ public class LoginActivity extends AppCompatActivity  {
 
             }
         });
+
+
+
+
+
+
     }
 
 
@@ -138,48 +158,64 @@ public class LoginActivity extends AppCompatActivity  {
                     FirebaseUser u=FirebaseAuth.getInstance().getCurrentUser();
                     String S=u.getUid();
 
-                    DatabaseReference reff= FirebaseDatabase.getInstance().getReference().child("UserInfo").child(S);
+                    DatabaseReference reff= FirebaseDatabase.getInstance().getReference().child("UserInfo");
+                    //reff.orderByChild("userid").equalTo(S);
                     reff.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             UserData userData=new UserData();
-                            // userData.AccountType=snapshot.child("accountType").getValue().toString();
-                            userData.setAccountType(snapshot.child("accountType").getValue().toString());
-                            String c=userData.getAccountType();
-                            //Toast.makeText(MainActivity.this, c, Toast.LENGTH_SHORT).show();
-                            if(c.equalsIgnoreCase("GeneralUser"))
 
-                            {
-                                if(FirebaseAuth.getInstance().getCurrentUser().isEmailVerified())
-                                {
-                                    finish();//page wont be seen while returning
-                                    Intent intent= new Intent(getApplicationContext(),UploadActivity.class);
-                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                    startActivity(intent);
+                            if (snapshot.exists()) {
+                                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                    userData = dataSnapshot.getValue(UserData.class);
+                                    if (userData != null) {
+                                        String c = userData.getAccountType();
+                                        String uid=userData.getUserid();
+                                        //Toast.makeText(MainActivity.this, accountType, Toast.LENGTH_SHORT).show();
+
+                                        if(c.equalsIgnoreCase("GeneralUser") && uid.equalsIgnoreCase(S))
+
+                                        {
+                                            if(FirebaseAuth.getInstance().getCurrentUser().isEmailVerified())
+                                            {
+                                                finish();//page wont be seen while returning
+                                                Intent intent= new Intent(getApplicationContext(),UploadActivity.class);
+                                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                                startActivity(intent);
 
 
+                                            }
+                                            else
+                                            {
+                                                Toast.makeText(LoginActivity.this, "Verify your email address before Login", Toast.LENGTH_SHORT).show();
+                                                FirebaseAuth.getInstance().signOut();
+                                                finish();
+                                            }
+
+
+
+
+
+
+                                        }
+
+                                        else
+                                        {
+                                            Toast.makeText(LoginActivity.this, "You are not a registered user", Toast.LENGTH_SHORT).show();
+                                            finish();//page wont be seen while returning
+                                            FirebaseAuth.getInstance().signOut();
+                                            finish();
+                                            Intent intent= new Intent(LoginActivity.this,SignUpActivity.class);
+                                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                            startActivity(intent);
+
+                                        }
+
+
+                                    }
                                 }
-                                else
-                                {
-                                    Toast.makeText(LoginActivity.this, "Verify your email address before Login", Toast.LENGTH_SHORT).show();
-                                }
-
-
-
-
-
-
                             }
 
-                            else
-                            {
-                                Toast.makeText(LoginActivity.this, "You are not a registered user", Toast.LENGTH_SHORT).show();
-                                finish();//page wont be seen while returning
-                                Intent intent= new Intent(LoginActivity.this,SignUpActivity.class);
-                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                startActivity(intent);
-
-                            }
 
 
 
@@ -188,6 +224,9 @@ public class LoginActivity extends AppCompatActivity  {
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {
 
+                            FirebaseAuth.getInstance().signOut();
+                            finish();
+                            Toast.makeText(getApplicationContext(),"Login Unsuccessful,Data Not Found",Toast.LENGTH_SHORT).show();
                         }
                     });
 
@@ -246,12 +285,17 @@ public class LoginActivity extends AppCompatActivity  {
              */
 
 
+                    Intent intent = new Intent(getApplicationContext(),UploadActivity.class);
+                    startActivity(intent);
+                    finish();
 
 
 
-          Intent intent = new Intent(getApplicationContext(),UploadActivity.class);
-           startActivity(intent);
-           finish();
+
+
+
+
+
         }
     }
 }

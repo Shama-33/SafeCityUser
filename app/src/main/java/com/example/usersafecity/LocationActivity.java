@@ -1,6 +1,7 @@
 package com.example.usersafecity;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
@@ -26,6 +27,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -161,6 +163,46 @@ public class LocationActivity extends AppCompatActivity {
     }
 
     private void getCurrentLocation() {
+
+        InternetConnectionChecker connectionChecker = new InternetConnectionChecker(LocationActivity.this); // Replace 'this' with your activity or context
+        if (!connectionChecker.isInternetConnected()) {
+            Toast.makeText(getApplicationContext(), "No Internet Connection", Toast.LENGTH_SHORT).show();
+            return;
+
+
+        }
+
+
+        // Inside your UploadActivity or any other activity
+        LocationServiceChecker locationServiceChecker = new LocationServiceChecker(this);
+
+// Check if location service is enabled
+        if (locationServiceChecker.isLocationServiceEnabled()) {
+            // Location service is enabled, proceed with your logic
+            // ...
+
+        } else {
+            // Location service is not enabled, show a dialog or open settings
+            new AlertDialog.Builder(this)
+                    .setTitle("Location Service Required")
+                    .setMessage("Please enable location services to use this feature.")
+                    .setPositiveButton("Open Settings", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            // Open location settings
+                            locationServiceChecker.openLocationSettings();
+                        }
+                    })
+                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            // Handle cancel action or remove this block if not needed
+                        }
+                    })
+                    .show();
+        }
+
+
         progressBar.setVisibility(View.VISIBLE);
         LocationRequest locationRequest = new LocationRequest();
         locationRequest.setInterval(10000);
@@ -274,6 +316,14 @@ public class LocationActivity extends AppCompatActivity {
         state = findViewById(R.id.textstate);
          */
 
+        InternetConnectionChecker connectionChecker = new InternetConnectionChecker(LocationActivity.this); // Replace 'this' with your activity or context
+        if (!connectionChecker.isInternetConnected()) {
+            Toast.makeText(getApplicationContext(), "No Internet Connection", Toast.LENGTH_SHORT).show();
+            return;
+
+
+        }
+
         uploadProgressBar.setVisibility(View.VISIBLE);
         String con,dis,div,ct,loc,pin,cc;
         con= country.getText().toString().trim();
@@ -330,7 +380,8 @@ public class LocationActivity extends AppCompatActivity {
                     double progress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
                     uploadProgressBar.setProgress((int) progress);
                 }
-            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            })
+                        .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                         Task<Uri> uriTask=taskSnapshot.getStorage().getDownloadUrl();
@@ -461,6 +512,8 @@ public class LocationActivity extends AppCompatActivity {
         }
         else if (item.getItemId()==R.id.ProfileMenuId)
         {
+            Intent i=new Intent(getApplicationContext(),ProfileActivity.class);
+            startActivity(i);
 
         }
         else if (item.getItemId()==R.id.HistoryMenuId)

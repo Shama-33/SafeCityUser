@@ -1,9 +1,356 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".DetailHistoryActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtInternetStatusDetailHistory"
+        android:text="---No Internet Connection---"
+        android:gravity="center"
+        android:textColor="@color/colorPrimary"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:background="@color/grey_3"
+        android:backgroundTint="@color/grey_3"
+        />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtInternetStatusDetailHistory"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+
+            <ImageView
+                android:layout_width="300dp"
+                android:layout_height="300dp"
+                android:id="@+id/histimgML"
+                android:layout_gravity="center"
+                android:src="@drawable/city"
+                android:layout_marginBottom="20dp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="Upload Date : "
+                android:textSize="20dp"
+                android:textColor="@color/black"/>
+            <TextView
+                android:id="@+id/historyupdate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="10dp"
+                android:text="Upload Date : "
+                android:textSize="20dp"
+                android:textColor="#223AC1"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:text="Upload Time : "
+                    android:textSize="20dp"
+                    android:textColor="@color/black"/>
+                <TextView
+                    android:id="@+id/historyuptime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="10dp"
+                    android:text="Upload Date : "
+                    android:textSize="20dp"
+                    android:textColor="#223AC1"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:text="Status            : "
+                    android:textSize="20dp"
+                    android:textColor="@color/black"/>
+                <TextView
+                    android:id="@+id/historystatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="10dp"
+                    android:text="Upload Date : "
+                    android:textSize="20dp"
+                    android:textColor="#223AC1"/>
+            </LinearLayout>
+
+
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_standard_new"
+                android:layout_marginEnd="@dimen/spacing_standard_new"
+                android:layout_marginBottom="@dimen/spacing_standard_new"
+                android:background="@drawable/bg_rectangle_order"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="70dp"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/montserrat"
+                    android:paddingStart="@dimen/spacing_standard_new"
+                    android:paddingTop="@dimen/spacing_standard"
+                    android:paddingEnd="@dimen/spacing_standard_new"
+                    android:paddingBottom="@dimen/spacing_standard"
+                    android:text="Address : "
+                    android:textColor="@color/textColorPrimary"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/divider_width"
+                    android:background="@color/view_color" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/spacing_standard">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/spacing_standard"
+                        android:layout_marginEnd="@dimen/spacing_standard"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/montserrat"
+                            android:text="@string/lbl_loca"
+                            android:textColor="@color/colorPrimary_sec" />
+
+                        <TextView
+                            android:id="@+id/htextaddress"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/montserrat"
+                            android:textColor="@color/black" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/spacing_standard"
+                        android:layout_marginTop="@dimen/spacing_control"
+                        android:layout_marginEnd="@dimen/spacing_standard"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/montserrat"
+                            android:text="@string/lbl_city"
+                            android:textColor="@color/colorPrimary_sec" />
+
+                        <TextView
+                            android:id="@+id/htextlocality"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/spacing_control"
+                            android:fontFamily="@font/montserrat"
+                            android:text="@string/ques"
+                            android:textColor="@color/colorPrimary" />
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/spacing_standard"
+                        android:layout_marginTop="@dimen/spacing_standard"
+                        android:layout_marginEnd="@dimen/spacing_standard"
+                        android:layout_marginBottom="@dimen/spacing_control"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginTop="0dp"
+                            android:fontFamily="@font/montserrat"
+                            android:gravity="center_vertical"
+                            android:text="@string/pincode"
+                            android:textColor="@color/colorPrimary_sec" />
+
+                        <TextView
+                            android:id="@+id/htextcode"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/spacing_control"
+                            android:layout_marginTop="0dp"
+                            android:fontFamily="@font/montserrat"
+                            android:text="@string/ques"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="15dp"
+                            tools:text="$50" />
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/spacing_standard"
+                        android:layout_marginTop="@dimen/spacing_standard"
+                        android:layout_marginEnd="@dimen/spacing_standard"
+                        android:layout_marginBottom="@dimen/spacing_control"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginTop="0dp"
+                            android:fontFamily="@font/montserrat"
+                            android:gravity="center_vertical"
+                            android:text="Division"
+                            android:textColor="@color/colorPrimary_sec" />
+
+                        <TextView
+                            android:id="@+id/htextstate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/spacing_control"
+                            android:layout_marginTop="0dp"
+                            android:fontFamily="@font/montserrat"
+                            android:text="@string/ques"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="15dp"
+                            tools:text="$50" />
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/spacing_standard"
+                        android:layout_marginTop="@dimen/spacing_standard"
+                        android:layout_marginEnd="@dimen/spacing_standard"
+                        android:layout_marginBottom="@dimen/spacing_control"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginTop="0dp"
+                            android:fontFamily="@font/montserrat"
+                            android:gravity="center_vertical"
+                            android:text="@string/dictrict"
+                            android:textColor="@color/colorPrimary_sec" />
+
+                        <TextView
+                            android:id="@+id/htextdistrict"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/spacing_control"
+                            android:layout_marginTop="0dp"
+                            android:fontFamily="@font/montserrat"
+                            android:text="@string/ques"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="15dp"
+                            tools:text="$50" />
+
+                    </LinearLayout>
+
+
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/spacing_standard"
+                        android:layout_marginTop="@dimen/spacing_standard"
+                        android:layout_marginEnd="@dimen/spacing_standard"
+                        android:layout_marginBottom="@dimen/spacing_control"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginTop="0dp"
+                            android:fontFamily="@font/montserrat"
+                            android:gravity="center_vertical"
+                            android:text="@string/country"
+                            android:textColor="@color/colorPrimary_sec" />
+
+                        <TextView
+                            android:id="@+id/htextcountry"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/spacing_control"
+                            android:layout_marginTop="0dp"
+                            android:fontFamily="@font/montserrat"
+                            android:text="@string/ques"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="15dp"
+                            tools:text="$50" />
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Description and Comments :"
+                android:textColor="@color/black"
+                android:textSize="16dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="10dp"/>
+
+            <TextView
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtviewdescription"
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                android:text="Additional description, feedback \nand suggestions(optional)"
+                android:layout_gravity="center"
+                android:layout_marginBottom="30dp"
+                />
+
+
+        </LinearLayout>
+
+    </ScrollView>
+</RelativeLayout>

@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".SignUpActivity">
 
+
     <EditText
         android:id="@+id/edttxtemailup"
         android:layout_width="369dp"
@@ -13,17 +14,18 @@
         android:background="@color/white"
         android:backgroundTint="@color/white"
         android:drawableRight="@drawable/ic_baseline_email_24"
-        android:paddingRight="5dp"
         android:hint="Email"
         android:inputType="textEmailAddress"
         android:paddingLeft="10dp"
+        android:paddingRight="5dp"
         android:textColor="@color/black"
         android:textColorHint="#5E5B5B"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.476"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.292" />
+        app:layout_constraintVertical_bias="0.321" />
 
     <EditText
         android:id="@+id/edttxtpasswordup"
@@ -31,18 +33,19 @@
         android:layout_height="55dp"
         android:background="@color/white"
         android:backgroundTint="@color/white"
+        android:drawableRight="@drawable/ic_baseline_key_24"
         android:hint="Password"
         android:inputType="textPassword"
-        android:drawableRight="@drawable/ic_baseline_key_24"
-        android:paddingRight="5dp"
         android:paddingLeft="10dp"
+        android:paddingRight="5dp"
         android:textColor="@color/black"
         android:textColorHint="#5E5B5B"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.476"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.387" />
+        app:layout_constraintVertical_bias="0.415" />
 
     <EditText
         android:id="@+id/edttxtpasswordupconfirm"
@@ -50,18 +53,19 @@
         android:layout_height="55dp"
         android:background="@color/white"
         android:backgroundTint="@color/white"
+        android:drawableRight="@drawable/ic_baseline_key_24"
         android:hint="Confirm Password"
         android:inputType="textPassword"
         android:paddingLeft="10dp"
-        android:textColor="@color/black"
-        android:drawableRight="@drawable/ic_baseline_key_24"
         android:paddingRight="5dp"
+        android:textColor="@color/black"
         android:textColorHint="#5E5B5B"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.523"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.482" />
+        app:layout_constraintVertical_bias="0.514" />
 
     <EditText
         android:id="@+id/edttxtusername"
@@ -69,34 +73,35 @@
         android:layout_height="55dp"
         android:background="@color/white"
         android:backgroundTint="@color/white"
+        android:drawableRight="@drawable/ic_baseline_person_24"
         android:hint="Name"
         android:inputType="text"
-        android:drawableRight="@drawable/ic_baseline_person_24"
-        android:paddingRight="5dp"
         android:paddingLeft="10dp"
+        android:paddingRight="5dp"
         android:textColor="@color/black"
         android:textColorHint="#5E5B5B"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.476"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.097" />
+        app:layout_constraintVertical_bias="0.134" />
 
     <TextView
         android:layout_width="60dp"
         android:layout_height="53dp"
         android:background="@color/white"
-        android:text="+880"
-        android:textColor="@color/black"
         android:paddingLeft="10dp"
         android:paddingTop="15dp"
+        android:text="+880"
+        android:textColor="@color/black"
         android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.053"
+        app:layout_constraintHorizontal_bias="0.056"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.197" />
+        app:layout_constraintVertical_bias="0.228" />
 
     <EditText
         android:id="@+id/edttxtphone"
@@ -112,10 +117,10 @@
         android:textColorHint="#5E5B5B"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.79"
+        app:layout_constraintHorizontal_bias="0.8"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.197" />
+        app:layout_constraintVertical_bias="0.228" />
 
     <TextView
 
@@ -173,8 +178,9 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.619"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.675" />
+        app:layout_constraintVertical_bias="0.737" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

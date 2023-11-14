@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SettingsActivity">
+
+
+   <ScrollView
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content">
+
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvLanguageSettings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Language Settings"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:padding="16dp"/>
+
+        <TextView
+            android:id="@+id/tvSelectLanguage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Select Language"
+            android:textSize="16sp"
+            android:layout_below="@id/tvLanguageSettings"
+            android:padding="16dp"/>
+
+        <RadioGroup
+            android:id="@+id/radioGroupLanguage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvSelectLanguage"
+            android:padding="16dp">
+
+            <RadioButton
+                android:id="@+id/radioButtonEnglish"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="English"/>
+
+            <RadioButton
+                android:id="@+id/radioButtonBangla"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Bangla"/>
+        </RadioGroup>
+
+
+       </LinearLayout>
+
+
+   </ScrollView>
+
+
+
+
+
+</RelativeLayout>

@@ -35,7 +35,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     private ProgressBar progressbarup;
     int flag=0;
 
-    private NetworkChangeReceiver networkChangeReceiver;
+    // NetworkChangeReceiver networkChangeReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,12 +56,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         buttonuser=findViewById(R.id.buttonuser);
         progressbarup=(ProgressBar) findViewById(R.id.progressBarup);
 
-        InternetConnectionChecker connectionChecker = new InternetConnectionChecker(SignUpActivity.this); // Replace 'this' with your activity or context
-        if (connectionChecker.isInternetConnected()) {
 
-        } else {
-            Toast.makeText(this, "No Internet Connection", Toast.LENGTH_SHORT).show();
-        }
 
 
         //networkChangeReceiver = new NetworkChangeReceiver();
@@ -77,7 +72,17 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     public void onClick(View view) {
          if(view.getId()==R.id.buttonuser)
         {
-            UserRegister();
+
+            InternetConnectionChecker connectionChecker = new InternetConnectionChecker(SignUpActivity.this); // Replace 'this' with your activity or context
+            if (connectionChecker.isInternetConnected()) {
+                UserRegister();
+
+            } else {
+                Toast.makeText(getApplicationContext(), "No Internet Connection", Toast.LENGTH_SHORT).show();
+            }
+
+
+
 
         }
         else if (view.getId()==R.id.txtSignin){
@@ -198,6 +203,9 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                     userData.setName(user);
                     userData.setEmail(email);
                     userData.setPhone("+880" + phone_no);
+                    userData.setImagepath("");
+                    userData.setOccupation("");
+                    userData.setAddress("");
 
                     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("UserInfo");
                     databaseReference.child(mAuth.getUid()).setValue(userData).addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -270,16 +278,16 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     protected void onResume() {
         super.onResume();
-        networkChangeReceiver = new NetworkChangeReceiver();
+       // networkChangeReceiver = new NetworkChangeReceiver();
 
-        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
-        registerReceiver(networkChangeReceiver, filter);
+        //IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        //registerReceiver(networkChangeReceiver, filter);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        unregisterReceiver(networkChangeReceiver);
+       // unregisterReceiver(networkChangeReceiver);
     }
 
 

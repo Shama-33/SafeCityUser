@@ -6,6 +6,36 @@ public class UserData {
     String phone;
     String email;
     String AccountType;
+    String imagepath;
+    String Occupation;
+    String Address;
+
+    public String getImagepath() {
+        return imagepath;
+    }
+
+    public void setImagepath(String imagepath) {
+        this.imagepath = imagepath;
+    }
+
+    public String getOccupation() {
+        return Occupation;
+    }
+
+    public void setOccupation(String occupation) {
+        Occupation = occupation;
+    }
+
+    public String getAddress() {
+        return Address;
+    }
+
+    public void setAddress(String address) {
+        Address = address;
+    }
+
+
+
 
     public String getAccountType() {
         return AccountType;

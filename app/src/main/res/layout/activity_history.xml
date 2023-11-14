@@ -58,6 +58,23 @@
             android:textColor="@color/black"
             android:textSize="20dp" />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtInternetStatusHistory"
+            android:text="---No Internet Connection---"
+            android:gravity="center"
+            android:textColor="@color/colorPrimary"
+            android:textSize="20dp"
+            android:layout_margin="10dp"
+
+            android:textStyle="bold"
+            android:background="#FF9090"
+            android:backgroundTint="@color/grey_3"
+            android:layout_below="@+id/txtviewfilter"
+            />
+
+
 
     </RelativeLayout>
 

@@ -3,10 +3,16 @@ package com.example.usersafecity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -38,12 +44,15 @@ public class HistoryActivity extends AppCompatActivity {
 
     private EditText edttxtsearch_bar;
     private Button btnFilter;
-    private TextView txtviewfilter;
+    private TextView txtviewfilter,txtInternetStatusHistory;
     private RecyclerView RecyclerViewrv;
     FirebaseAuth firebaseAuth=FirebaseAuth.getInstance();
 
     private ArrayList<UserPhoto> photoArray;
     private AdapterHistory adapterHistory;
+
+    private NetworkChangeReceiver networkChangeReceiver;
+    private BroadcastReceiver networkChangeBroadcastReceiver;
 
 
     @Override
@@ -56,8 +65,53 @@ public class HistoryActivity extends AppCompatActivity {
         btnFilter=findViewById(R.id.btnFilter);
         txtviewfilter=findViewById(R.id.txtviewfilter);
         RecyclerViewrv=findViewById(R.id.RecyclerViewrv);
+        txtInternetStatusHistory=findViewById(R.id.txtInternetStatusHistory);
 
-         loadinfo();
+
+
+
+
+
+
+
+        if (!isNetworkConnected()) {
+            showNoInternetUI();
+        } else {
+            hideNoInternetUI();
+        }
+
+        // Register the network change receiver
+        networkChangeReceiver = new NetworkChangeReceiver();
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(new NetworkChangeReceiver(), intentFilter);
+
+
+        networkChangeBroadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                boolean isConnected = intent.getBooleanExtra("isConnected", false);
+                if (isConnected) {
+                    // Network connected
+
+                    showNoInternetUI();
+                } else {
+                    // Network disconnected
+                    hideNoInternetUI();
+
+                }
+            }
+        };
+        LocalBroadcastManager.getInstance(this)
+                .registerReceiver(networkChangeBroadcastReceiver, new IntentFilter(NetworkChangeReceiver.NETWORK_CHANGE_ACTION));
+
+
+
+
+
+
+
+        loadinfo();
 
 
 
@@ -272,6 +326,8 @@ public class HistoryActivity extends AppCompatActivity {
         }
         else if (item.getItemId()==R.id.ProfileMenuId)
         {
+            Intent i=new Intent(getApplicationContext(),ProfileActivity.class);
+            startActivity(i);
 
         }
         else if (item.getItemId()==R.id.HistoryMenuId)
@@ -290,6 +346,73 @@ public class HistoryActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+
+    private void showNoInternetUI() {
+        txtInternetStatusHistory.setVisibility(View.VISIBLE);
+        //btnProfileUpdate.setEnabled(false); // Disable the upload button
+    }
+
+    private void hideNoInternetUI() {
+        txtInternetStatusHistory.setVisibility(View.GONE);
+        // btnProfileUpdate.setEnabled(true); // Enable the upload button
+    }
+
+    private boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (cm != null) {
+            NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+            return activeNetwork != null && activeNetwork.isConnected();
+        }
+        return false;
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        // Check the internet connection status again when the activity is started
+        if (!isNetworkConnected()) {
+            showNoInternetUI();
+        } else {
+            hideNoInternetUI();
+        }
+    }
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        if (!isNetworkConnected()) {
+            showNoInternetUI();
+        } else {
+            hideNoInternetUI();
+        }
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        // Unregister the network change receiver to avoid unnecessary updates
+        unregisterReceiver(networkChangeReceiver);
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // Unregister the network change receiver and local broadcast receiver
+        unregisterReceiver(networkChangeReceiver);
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(networkChangeBroadcastReceiver);
+    }
+
+    @Override
+    public void onBackPressed() {
+        // Instead of calling super.onBackPressed(), start HomeActivity
+        Intent intent = new Intent(HistoryActivity.this, UploadActivity.class);
+        startActivity(intent);
+        finish(); // Optional: finish the current activity if you don't want to keep it in the back stack
+    }
+
+
 
 
 

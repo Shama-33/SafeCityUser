@@ -1,8 +1,11 @@
 package com.example.usersafecity;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -10,6 +13,9 @@ import android.os.Build;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.Manifest;
 import android.content.Intent;
@@ -17,8 +23,10 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.media.ThumbnailUtils;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -45,6 +53,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.usersafecity.ml.Model;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
@@ -53,7 +62,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public class UploadActivity extends AppCompatActivity {
+public class UploadActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     Button btnloc;
     TextView result, confidence;
@@ -62,12 +71,38 @@ public class UploadActivity extends AppCompatActivity {
     int imageSize = 224;
     String Classify="",Confidence="";
 
+    DrawerLayout drawerLayout1;
+    NavigationView navigationView1;
+    Toolbar toolbar1;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_upload);
+
+
+        drawerLayout1 = findViewById(R.id.drawer_layout_ad);
+        navigationView1 = findViewById(R.id.nav_view_ad);
+        toolbar1 = findViewById(R.id.toolbar_ad);
+
+
+       setSupportActionBar(toolbar1);
+        //getSupportActionBar().hide();
+        //setSupportActionBar(toolbar1);
+
+        navigationView1.bringToFront();
+
+        ActionBarDrawerToggle toggle1 = new ActionBarDrawerToggle(this, drawerLayout1, toolbar1, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawerLayout1.addDrawerListener(toggle1);
+        toggle1.syncState();
+        navigationView1.setNavigationItemSelectedListener(this);
+
+        //navigationView1.setCheckedItem(R.id.prop);
+
+       // applyLanguage();
 
         btnloc=findViewById(R.id.btnloc);
        /* btnloc.setOnClickListener(new View.OnClickListener() {
@@ -86,6 +121,12 @@ public class UploadActivity extends AppCompatActivity {
                 //String classificationResult = result.getText().toString();
                 //String confidenceInfo = confidence.getText().toString();
 
+                InternetConnectionChecker connectionChecker = new InternetConnectionChecker(UploadActivity.this); // Replace 'this' with your activity or context
+                if (!connectionChecker.isInternetConnected()) {
+                    Toast.makeText(getApplicationContext(), "No Internet Connection", Toast.LENGTH_SHORT).show();
+                  return;
+
+                }
                 // Check if any of the data is empty
                 if ( Classify.isEmpty() || Confidence.isEmpty()) {
                     // Display a toast message indicating that data is missing
@@ -141,15 +182,22 @@ public class UploadActivity extends AppCompatActivity {
     }
 
 
+    private void applyLanguage() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String language = preferences.getString("language", "en");
+        LocaleHelper.setLocale(this, language);
+    }
 
-    @Override
+
+
+    /*@Override
     public boolean onCreateOptionsMenu (Menu menu)
     {
         getMenuInflater().inflate(R.menu.content_menu,menu);
         return super.onCreateOptionsMenu(menu);
-    }
+    }*/
 
-    @Override
+    /*@Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if(item.getItemId()==R.id.SignOutMenuId)
         {
@@ -161,7 +209,8 @@ public class UploadActivity extends AppCompatActivity {
         }
         else if (item.getItemId()==R.id.ProfileMenuId)
         {
-
+            Intent i=new Intent(getApplicationContext(),ProfileActivity.class);
+            startActivity(i);
         }
         else if (item.getItemId()==R.id.HistoryMenuId)
         {
@@ -173,8 +222,16 @@ public class UploadActivity extends AppCompatActivity {
         {
 
         }
+        else if (item.getItemId()==R.id.SettingsMenuId)
+        {
+
+        }
+        else if (item.getItemId()==R.id.AboutUsMenuId)
+        {
+
+        }
         return super.onOptionsItemSelected(item);
-    }
+    }*/
 
 
 
@@ -298,4 +355,79 @@ public class UploadActivity extends AppCompatActivity {
         return Uri.fromFile(tempFile);
     }
 
+    @Override
+    public void onBackPressed() {
+
+        if (drawerLayout1.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout1.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+        if(item.getItemId()==R.id.SignOutMenuId)
+        {
+
+            //FirebaseAuth.getInstance().signOut();
+            //finish();
+            //Intent intent=new Intent(getApplicationContext(),LoginActivity.class);
+            //startActivity(intent);
+
+
+            new AlertDialog.Builder(this)
+                    .setTitle("Sign Out")
+                    .setMessage("Confirm Sign Out?")
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // User confirmed, sign out
+                            FirebaseAuth.getInstance().signOut();
+                            finish();
+                            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                            startActivity(intent);
+                        }
+                    })
+                    .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // User canceled the sign out
+
+                        }
+                    })
+                    .show();
+
+
+
+
+        }
+
+        else if (item.getItemId()==R.id.ProfileMenuId)
+        {
+            Intent i=new Intent(getApplicationContext(),ProfileActivity.class);
+            startActivity(i);
+        }
+        else if (item.getItemId()==R.id.HistoryMenuId)
+        {
+            Intent i=new Intent(getApplicationContext(),HistoryActivity.class);
+            startActivity(i);
+
+        }
+        else if (item.getItemId()==R.id.HomeMenuId)
+        {
+
+        }
+        else if (item.getItemId()==R.id.SettingsMenuId)
+        {
+            Intent i=new Intent(getApplicationContext(),SettingsActivity.class);
+            startActivity(i);
+
+        }
+        else if (item.getItemId()==R.id.AboutUsMenuId)
+        {
+
+        }
+        drawerLayout1.closeDrawer(GravityCompat.START);
+        return true;
+    }
 }

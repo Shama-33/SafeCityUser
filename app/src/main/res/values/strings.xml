@@ -9,4 +9,8 @@
     <string name="pincode">PinCode: </string>
     <string name="dictrict">District: </string>
     <string name="ques">  </string>
+    <string name="navigation_drawer_open">NavigationDrawerOpen</string>
+    <string name="navigation_drawer_close"> NavigationDrawerClose</string>
+    <string name="Select_Picture_UploadActivity">Select Picture from Gallery</string>
+
 </resources>

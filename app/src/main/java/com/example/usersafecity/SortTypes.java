@@ -9,7 +9,5 @@ public class SortTypes {
                     "Address Ascending",
                     "Address Descending",
 
-
-
             };
 }
